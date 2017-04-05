@@ -79,13 +79,15 @@ var register = function (server, options, next) {
     }, options)
 
     /*  convenience redirect  */
-    server.route({
-        method: "GET",
-        path: options.graphiqlURL,
-        handler: function (request, reply) {
-            reply.redirect(path.resolve(options.graphiqlURL, "/"))
-        }
-    })
+    if (options.graphiqlURL !== "/") {
+      server.route({
+          method: "GET",
+          path: options.graphiqlURL,
+          handler: function (request, reply) {
+              reply.redirect(path.resolve(options.graphiqlURL, "/"))
+          }
+      })
+    }
 
     /*  static delivery of GraphiQL tool  */
     server.route({
