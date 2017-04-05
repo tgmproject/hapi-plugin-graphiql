@@ -83,14 +83,14 @@ var register = function (server, options, next) {
         method: "GET",
         path: options.graphiqlURL,
         handler: function (request, reply) {
-            reply.redirect(options.graphiqlURL + "/")
+            reply.redirect(path.resolve(options.graphiqlURL, "/"))
         }
     })
 
     /*  static delivery of GraphiQL tool  */
     server.route({
         method: "GET",
-        path: options.graphiqlURL + "/{name*}",
+        path: path.resolve(options.graphiqlURL, "/{name*}"),
         handler: co.wrap(function * (request, reply) {
             var name = request.params.name
             var files, content
